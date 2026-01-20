@@ -1,0 +1,232 @@
+kernel/
+│
+├── boot/                           # Firmware → Kernel transition
+│   ├── firmware/
+│   │   ├── uefi/
+│   │   ├── bios/
+│   │   └── custom_firmware/
+│   │
+│   ├── loader/
+│   │   ├── kernel_loader.c
+│   │   ├── memory_map.c
+│   │   ├── elf_loader.c
+│   │   └── handoff.c
+│   │
+│   ├── secure_boot/
+│   │   ├── signature_verify.c
+│   │   ├── chain_of_trust.c
+│   │   ├── key_store.c
+│   │   └── tpm_interface.c
+│   │
+│   └── boot_protocol/
+│       ├── boot_info.h
+│       ├── kernel_entry.h
+│       └── versioning.h
+│
+├── arch/                           # CPU-specific code ONLY
+│   ├── x86_64/
+│   │   ├── cpu/
+│   │   │   ├── cpuid.c
+│   │   │   ├── msr.c
+│   │   │   └── features.c
+│   │   │
+│   │   ├── descriptor_tables/
+│   │   │   ├── gdt.c
+│   │   │   ├── idt.c
+│   │   │   └── tss.c
+│   │   │
+│   │   ├── interrupt/
+│   │   │   ├── isr.c
+│   │   │   ├── irq.c
+│   │   │   └── syscall_entry.S
+│   │   │
+│   │   ├── memory/
+│   │   │   ├── paging.c
+│   │   │   └── tlb.c
+│   │   │
+│   │   ├── context/
+│   │   │   ├── context_switch.S
+│   │   │   └── cpu_state.h
+│   │   │
+│   │   └── smp/
+│   │       ├── ap_boot.c
+│   │       └── cpu_bringup.c
+│   │
+│   ├── arm64/
+│   │   ├── exception_levels/
+│   │   ├── mmu/
+│   │   ├── smp/
+│   │   ├── cache/
+│   │   └── context/
+│   │
+│   └── common/
+│       ├── atomic/
+│       ├── barriers/
+│       └── cpu_interface/
+│
+├── hal/                            # Hardware abstraction layer
+│   ├── cpu/
+│   ├── interrupt/
+│   ├── timer/
+│   ├── clock/
+│   ├── power/
+│   ├── dma/
+│   ├── io/
+│   ├── firmware_interface/
+│   └── hal_interface.h
+│
+├── core/                           # Kernel heart
+│   ├── init/
+│   │   ├── kernel_init.c
+│   │   ├── subsystem_init.c
+│   │   └── init_order.c
+│   │
+│   ├── panic/
+│   │   ├── panic.c
+│   │   └── crash_dump.c
+│   │
+│   ├── logging/
+│   │   ├── printk.c
+│   │   ├── log_buffer.c
+│   │   └── log_levels.h
+│   │
+│   ├── version/
+│   │   ├── kernel_version.c
+│   │   └── build_info.h
+│   │
+│   └── state/
+│       ├── kernel_state.c
+│       └── runtime_mode.h
+│
+├── memory/                         # Memory ecosystem
+│   ├── physical/
+│   │   ├── pmm.c
+│   │   ├── zones.c
+│   │   └── numa.c
+│   │
+│   ├── virtual/
+│   │   ├── vmm.c
+│   │   ├── address_space.c
+│   │   └── mmap.c
+│   │
+│   ├── paging/
+│   │   ├── page_tables.c
+│   │   ├── page_fault.c
+│   │   └── tlb.c
+│   │
+│   ├── allocators/
+│   │   ├── buddy.c
+│   │   ├── slab.c
+│   │   └── object_cache.c
+│   │
+│   ├── kernel_heap/
+│   ├── user_heap/
+│   └── memory_security/
+│       ├── aslr.c
+│       ├── guard_pages.c
+│       └── permissions.c
+│
+├── process/                        # Execution model
+│   ├── process_model/
+│   │   ├── pid.c
+│   │   ├── lifecycle.c
+│   │   └── states.h
+│   │
+│   ├── threads/
+│   │   ├── kthreads.c
+│   │   ├── uthreads.c
+│   │   └── tls.c
+│   │
+│   ├── scheduler/
+│   │   ├── scheduler_core.c
+│   │   ├── fair.c
+│   │   ├── realtime.c
+│   │   └── deadline.c
+│   │
+│   ├── ipc/
+│   │   ├── message_queue.c
+│   │   ├── shared_memory.c
+│   │   └── signals.c
+│   │
+│   └── synchronization/
+│       ├── mutex.c
+│       ├── spinlock.c
+│       ├── semaphore.c
+│       └── futex.c
+│
+├── drivers/                        # Driver ecosystem
+│   ├── framework/
+│   │   ├── driver_model.c
+│   │   ├── device_tree.c
+│   │   ├── hotplug.c
+│   │   └── power_mgmt.c
+│   │
+│   ├── bus/
+│   │   ├── pci/
+│   │   ├── usb/
+│   │   ├── i2c/
+│   │   └── spi/
+│   │
+│   ├── block/
+│   ├── char/
+│   ├── input/
+│   ├── display/
+│   ├── audio/
+│   ├── net/
+│   └── storage/
+│
+├── fs/                             # Storage layer
+│   ├── vfs/
+│   ├── cache/
+│   ├── journaling/
+│   ├── permissions/
+│   ├── fat32/
+│   ├── ext_like/
+│   ├── tmpfs/
+│   ├── procfs/
+│   └── sysfs/
+│
+├── security/                       # System security
+│   ├── identity/
+│   │   ├── users.c
+│   │   ├── groups.c
+│   │   └── roles.c
+│   │
+│   ├── capabilities/
+│   ├── sandbox/
+│   ├── mac/
+│   ├── kernel_protection/
+│   │   ├── rodata.c
+│   │   ├── stack_guard.c
+│   │   └── ptr_restrict.c
+│   │
+│   └── auditing/
+│
+├── syscall/                        # Kernel ↔ user contract
+│   ├── abi/
+│   ├── dispatch/
+│   ├── validation/
+│   ├── compatibility/
+│   └── versioning/
+│
+├── debug/                          # Diagnostics
+│   ├── kdb/
+│   ├── tracing/
+│   ├── profiling/
+│   └── crash_reports/
+│
+├── config/                         # Kernel configuration
+│   ├── kconfig/
+│   ├── build_options/
+│   └── feature_flags/
+│
+└── include/                        # Public kernel headers
+    ├── kernel/
+    ├── arch/
+    ├── hal/
+    ├── memory/
+    ├── process/
+    ├── drivers/
+    ├── fs/
+    ├── security/
+    └── syscall/
