@@ -1,0 +1,13 @@
+🎯 snarOS v1.0 — realistic target
+
+If you achieve THIS, you win.
+
+snarOS 1.0 should be able to:
+
+✅ Boot via UEFI
+✅ Switch to long mode (x86_64)
+✅ Display text on screen
+✅ Handle keyboard input
+✅ Have a basic kernel loop
+✅ Simple memory allocator
+✅ Basic filesystem (even fake one)
