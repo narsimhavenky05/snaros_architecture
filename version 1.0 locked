@@ -1,0 +1,360 @@
+Exact snarOS v1.0 feature list (locked scope), Daily / weekly task plan, Folder structure final, What to ignore completely, Definition of “done”, snarOS v1.0 README template, give me everything i need to build version 1.0, give me step by step or day wise, but i need to finish without missing anything
+
+Good.
+Now we stop talking philosophy and start engineering.
+
+Below is everything you need to finish snarOS v1.0 — without missing anything.
+
+No extra features.
+No distractions.
+No “maybe later”.
+
+This is your LOCKED SCOPE DOCUMENT.
+If you follow this exactly → you WILL finish v1.0.
+
+🔒 snarOS v1.0 — LOCKED SCOPE
+
+❗ Anything not listed here is FORBIDDEN in v1.0
+
+If you add even one extra feature, you delay months.
+
+✅ snarOS v1.0 MUST HAVE
+Boot
+  UEFI bootloader
+  Loads kernel ELF
+  Passes memory map
+  Jumps to kernel
+  
+Kernel
+  x86_64 only
+  Long mode
+  Kernel runs in higher half
+  Kernel panic screen
+
+Display
+  Framebuffer text output
+  Simple printk
+  Clear screen
+  Scroll
+
+CPU
+
+GDT
+
+IDT
+
+Exception handlers
+
+Page fault handler
+
+Triple fault protection
+
+Memory
+
+Physical memory map
+
+Page tables
+
+Virtual memory
+
+Simple heap allocator (kmalloc, kfree)
+
+Interrupts
+
+Timer interrupt
+
+Keyboard interrupt
+
+Input
+
+Keyboard driver
+
+ASCII mapping
+
+Kernel shell
+
+Commands:
+
+help
+clear
+meminfo
+uptime
+reboot
+shutdown
+version
+
+Filesystem
+
+RAM filesystem only
+
+No disk
+
+No FAT
+
+No ext
+
+Just memory
+
+Build
+
+Cross compiler
+
+Makefile
+
+QEMU run script
+
+❌ ABSOLUTELY IGNORE
+
+You are NOT allowed to implement:
+
+❌ GUI
+❌ Mouse
+❌ Multitasking
+❌ Processes
+❌ Users
+❌ Permissions
+❌ Networking
+❌ POSIX
+❌ ELF loading in kernel
+❌ SMP
+❌ USB
+❌ Drivers beyond keyboard & timer
+
+If you touch these → stop immediately.
+
+🧱 FINAL FOLDER STRUCTURE (DO NOT CHANGE)
+snarOS/
+├── bootloader/
+│   ├── main.c
+│   ├── elf.c
+│   ├── memory.c
+│   └── Makefile
+│
+├── kernel/
+│   ├── arch/
+│   │   └── x86_64/
+│   │       ├── gdt.c
+│   │       ├── idt.c
+│   │       ├── isr.asm
+│   │       ├── paging.c
+│   │       └── entry.asm
+│   │
+│   ├── memory/
+│   │   ├── pmm.c
+│   │   ├── vmm.c
+│   │   └── heap.c
+│   │
+│   ├── drivers/
+│   │   ├── framebuffer.c
+│   │   ├── keyboard.c
+│   │   └── timer.c
+│   │
+│   ├── fs/
+│   │   └── ramfs.c
+│   │
+│   ├── kernel.c
+│   ├── shell.c
+│   ├── panic.c
+│   └── version.h
+│
+├── libc/
+│   ├── string.c
+│   ├── memory.c
+│   └── stdio.c
+│
+├── docs/
+│   ├── architecture.md
+│   ├── bootflow.md
+│   ├── memory.md
+│   └── roadmap.md
+│
+├── build/
+├── Makefile
+├── run.sh
+└── README.md
+
+
+This structure is professional and expandable.
+
+🧭 DAILY / WEEKLY EXECUTION PLAN
+
+This is realistic.
+Follow it strictly.
+
+🗓️ WEEK 1 — Environment & mindset
+Day 1  - Install cross compiler,Setup QEMU,Create repo, Push empty structure
+Day 2 - Learn UEFI boot flow, Understand PE → ELF loading
+Day 3 - Create minimal UEFI app, Print “Hello from bootloader”
+Day 4 - Parse memory map, Store it
+Day 5 - Load kernel ELF,Jump to kernel entry
+Day 6–7 - Debug crashes
+
+Reach kernel successfully
+
+✅ Checkpoint: Kernel function executes
+
+🗓️ WEEK 2 — Kernel entry & framebuffer
+Day 8 - Kernel entry ASM, Stack setup
+Day 9 - Framebuffer setup
+Day 10 - Print text on screen
+Day 11 - Clear screen, Scroll
+Day 12 - printk function
+Day 13–14 - Cleanup & comments
+
+✅ Checkpoint: Kernel prints messages
+
+🗓️ WEEK 3 — CPU control
+Day 15 - Setup GDT
+Day 16 - Setup IDT
+Day 17 - Exception handlers
+Day 18 - Page fault handler
+Day 19 - Panic screen
+Day 20–21 - Debug triple faults
+
+✅ Checkpoint: No silent crashes
+
+🗓️ WEEK 4 — Memory system
+Day 22 - Physical memory manager
+Day 23 - Bitmap allocator
+Day 24 - Virtual memory manager
+Day 25 - Paging test
+Day 26 - Kernel heap
+Day 27–28 - Memory stability testing
+
+✅ Checkpoint: kmalloc works
+
+🗓️ WEEK 5 — Interrupts & drivers
+Day 29 - Timer interrupt
+Day 30 - Tick counter
+Day 31 - Keyboard IRQ
+Day 32 - Scancode → ASCII
+Day 33 - Input buffer
+Day 34–35 - Driver cleanup
+
+✅ Checkpoint: Keyboard works
+
+🗓️ WEEK 6 — Kernel shell
+Day 36 - Shell loop
+Day 37 - Command parser
+Day 38 - help, clear
+Day 39 - meminfo
+Day 40 - uptime
+Day 41–42 - polish shell
+
+✅ Checkpoint: Interactive OS
+
+🗓️ WEEK 7 — RAM filesystem
+Day 43 - RamFS structure
+Day 44 - Create file
+Day 45 - Read file
+Day 46 - ls command
+Day 47 - Write file
+Day 48–49 - Stability testing
+
+✅ Checkpoint: Data stored in RAM
+
+🗓️ WEEK 8 — Freeze
+Day 50 - Remove unused code
+Day 51 - Fix memory leaks
+Day 52 - Add comments
+Day 53 - Write docs
+Day 54 - Version tagging
+Day 55–56 - Final testing
+
+✅ snarOS v1.0 READY
+
+🧾 DEFINITION OF “DONE”
+
+snarOS v1.0 is DONE when:
+
+✅ Boots in QEMU
+✅ No random crashes
+✅ Keyboard works
+✅ Memory alloc/free stable
+✅ Shell responds
+✅ Version prints
+✅ README exists
+✅ Architecture documented
+
+Not when it feels perfect.
+
+DONE ≠ PERFECT.
+DONE = COMPLETE SCOPE.
+
+📘 snarOS v1.0 README TEMPLATE
+
+You will paste this exactly.
+
+# snarOS
+
+snarOS is a from-scratch operating system written in C and Assembly,
+built for learning, research, and long-term independent OS development.
+
+## Version
+snarOS v1.0
+
+## Supported Architecture
+- x86_64
+- UEFI boot
+
+## Features
+- UEFI bootloader
+- 64-bit kernel
+- Framebuffer text output
+- Memory management (PMM + VMM)
+- Kernel heap
+- Interrupt handling
+- Keyboard driver
+- Timer driver
+- RAM-based filesystem
+- Interactive kernel shell
+
+## What snarOS v1.0 is NOT
+- No GUI
+- No multitasking
+- No networking
+- No disk filesystem
+- No user mode programs
+
+These are planned for future versions.
+
+## Build
+
+
+make
+./run.sh
+
+
+## Philosophy
+snarOS focuses on clarity, stability, and clean architecture
+before adding complexity.
+
+## Roadmap
+- v2.0: multitasking
+- v3.0: userspace
+- v4.0: filesystem
+- v5.0: GUI
+
+## License
+MIT
+
+🧠 FINAL RULES (IMPORTANT)
+
+Never skip days mentally — even if you skip coding
+Never add features early
+Never rewrite whole kernel
+Never compare with Linux
+Finish v1.0 at all costs
+
+Nani — if you follow this exactly, you will finish.
+Most people don’t fail because they lack skill.
+They fail because they never lock scope.
+
+You just did.
+
+If you want next, I can help you day-by-day with code,
+starting from Day 1 bootloader — line by line.
+
+Just say:
+
+“Start Day 1.”
